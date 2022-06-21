@@ -44,8 +44,8 @@ def transform_got10k(tracker_name, cfg_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='transform got10k results.')
-    parser.add_argument('--tracker_name', type=str, help='Name of tracking method.')
-    parser.add_argument('--cfg_name', type=str, help='Name of config file.')
+    parser.add_argument('--tracker_name',default="stark_s", type=str, help='Name of tracking method.')
+    parser.add_argument('--cfg_name',default="baseline", type=str, help='Name of config file.')
 
     args = parser.parse_args()
     transform_got10k(args.tracker_name, args.cfg_name)

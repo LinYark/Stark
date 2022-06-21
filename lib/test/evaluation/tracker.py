@@ -143,6 +143,11 @@ class Tracker:
             prev_output = OrderedDict(out)
             _store_outputs(out, {'time': time.time() - start_time})
 
+            a = np.array(prev_output["target_bbox"],dtype=np.int32)
+            cv.rectangle(image,(a[0],a[1]),(a[0]+a[2],a[1]+a[3]),(0,0,255),3)
+            cv.imshow("xx",image)
+            cv.waitKey(1)
+
         for key in ['target_bbox', 'all_boxes', 'all_scores']:
             if key in output and len(output[key]) <= 1:
                 output.pop(key)

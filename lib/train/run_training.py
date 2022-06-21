@@ -75,16 +75,31 @@ def run_training(script_name, config_name, cudnn_benchmark=True, local_rank=-1, 
 
 
 def main():
+
     parser = argparse.ArgumentParser(description='Run a train scripts in train_settings.')
-    parser.add_argument('--script', type=str, required=True, help='Name of the train script.')
-    parser.add_argument('--config', type=str, required=True, help="Name of the config file.")
+    # parser.add_argument('--script', type=str, required=True, help='Name of the train script.')
+    # parser.add_argument('--config', type=str, required=True, help="Name of the config file.")
     parser.add_argument('--cudnn_benchmark', type=bool, default=True, help='Set cudnn benchmark on (1) or off (0) (default is on).')
     parser.add_argument('--local_rank', default=-1, type=int, help='node rank for distributed training')
-    parser.add_argument('--save_dir', type=str, help='the directory to save checkpoints and logs')
+    # parser.add_argument('--save_dir', type=str, help='the directory to save checkpoints and logs')
     parser.add_argument('--seed', type=int, default=42, help='seed for random numbers')
+    # parser.add_argument('--use_lmdb', type=int, choices=[0, 1], default=0)  # whether datasets are in lmdb format
+    # parser.add_argument('--script_prv', type=str, default=None, help='Name of the train script of previous model.')
+    # parser.add_argument('--config_prv', type=str, default=None, help="Name of the config file of previous model.")
+    # for knowledge distillation
+    # parser.add_argument('--distill', type=int, choices=[0, 1], default=0)  # whether to use knowledge distillation
+    # parser.add_argument('--script_teacher', type=str, help='teacher script name')
+    # parser.add_argument('--config_teacher', type=str, help='teacher yaml configure file name')
+
+    parser.add_argument('--script',default="stark_s", type=str, help='training script name')
+    parser.add_argument('--config', type=str, default='baseline', help='yaml configure file name')
+    parser.add_argument('--save_dir',default=".",  type=str, help='root directory to save checkpoints, logs, and tensorboard')
+    parser.add_argument('--mode', default= "single", type=str, choices=["single", "multiple"], 
+                        help="train on single gpu or multiple gpus")
+    parser.add_argument('--nproc_per_node', type=int, help="number of GPUs per node")  # specify when mode is multiple
     parser.add_argument('--use_lmdb', type=int, choices=[0, 1], default=0)  # whether datasets are in lmdb format
-    parser.add_argument('--script_prv', type=str, default=None, help='Name of the train script of previous model.')
-    parser.add_argument('--config_prv', type=str, default=None, help="Name of the config file of previous model.")
+    parser.add_argument('--script_prv', type=str, help='training script name')
+    parser.add_argument('--config_prv', type=str, default='baseline', help='yaml configure file name')
     # for knowledge distillation
     parser.add_argument('--distill', type=int, choices=[0, 1], default=0)  # whether to use knowledge distillation
     parser.add_argument('--script_teacher', type=str, help='teacher script name')

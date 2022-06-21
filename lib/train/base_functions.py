@@ -127,7 +127,8 @@ def build_dataloaders(cfg, settings):
 
     loader_train = LTRLoader('train', dataset_train, training=True, batch_size=cfg.TRAIN.BATCH_SIZE, shuffle=shuffle,
                              num_workers=cfg.TRAIN.NUM_WORKER, drop_last=True, stack_dim=1, sampler=train_sampler)
-
+    # loader_train = LTRLoader('train', dataset_train, training=True, batch_size=cfg.TRAIN.BATCH_SIZE, shuffle=shuffle,
+    #                           num_workers=16,drop_last=True, stack_dim=1, sampler=train_sampler)
     # Validation samplers and loaders
     dataset_val = sampler.TrackingSampler(datasets=names2datasets(cfg.DATA.VAL.DATASETS_NAME, settings, opencv_loader),
                                           p_datasets=cfg.DATA.VAL.DATASETS_RATIO,
@@ -139,7 +140,9 @@ def build_dataloaders(cfg, settings):
     loader_val = LTRLoader('val', dataset_val, training=False, batch_size=cfg.TRAIN.BATCH_SIZE,
                            num_workers=cfg.TRAIN.NUM_WORKER, drop_last=True, stack_dim=1, sampler=val_sampler,
                            epoch_interval=cfg.TRAIN.VAL_EPOCH_INTERVAL)
-
+    # loader_val = LTRLoader('val', dataset_val, training=False, batch_size=cfg.TRAIN.BATCH_SIZE,
+    #                         num_workers=16,drop_last=True, stack_dim=1, sampler=val_sampler,
+    #                        epoch_interval=cfg.TRAIN.VAL_EPOCH_INTERVAL)
     return loader_train, loader_val
 
 
